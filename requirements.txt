@@ -1,1 +1,9 @@
 # For package
+
+# numpy 1.24.0 or later yields an error when instantiating Dataset
+numpy<1.24.0
+olymp
+scikit-learn
+sqlalchemy
+matplotlib
+seaborn
