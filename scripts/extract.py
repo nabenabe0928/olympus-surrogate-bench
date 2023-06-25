@@ -3,8 +3,9 @@ from __future__ import annotations
 import json
 import os
 
-from model_selector.constants import DATASET_NAMES, SAVE_DIR_NAME
 from model_selector.extract_from_olympus import get_dataset, get_search_space, save_dataset
+
+from olympus_surrogate_bench.constants import DATASET_NAMES, SAVE_DIR_NAME
 
 
 if __name__ == "__main__":

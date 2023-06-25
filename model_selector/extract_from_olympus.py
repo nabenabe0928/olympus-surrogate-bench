@@ -3,9 +3,9 @@ from __future__ import annotations
 import os
 import warnings
 
-from model_selector.constants import SAVE_DIR_NAME
-
 from olympus.datasets import Dataset
+
+from olympus_surrogate_bench.constants import SAVE_DIR_NAME
 
 
 warnings.simplefilter("ignore")
@@ -22,5 +22,5 @@ def get_search_space(dataset: Dataset) -> dict[str, tuple[float, float]]:
 def save_dataset(dataset: Dataset, dataset_name: str) -> None:
     dir_name = os.path.join(SAVE_DIR_NAME, dataset_name)
     os.makedirs(dir_name, exist_ok=True)
-    dataset.features.to_csv(os.path.join(dir_name, "feats.csv"))
-    dataset.targets.to_csv(os.path.join(dir_name, "targets.csv"))
+    dataset.features.to_csv(os.path.join(dir_name, "feats.csv"), index=False)
+    dataset.targets.to_csv(os.path.join(dir_name, "targets.csv"), index=False)

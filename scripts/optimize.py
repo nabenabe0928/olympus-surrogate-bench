@@ -1,5 +1,6 @@
-from model_selector.constants import DATASET_NAMES
 from model_selector.model_selection import optimize
+
+from olympus_surrogate_bench.constants import DATASET_NAMES
 
 
 if __name__ == "__main__":

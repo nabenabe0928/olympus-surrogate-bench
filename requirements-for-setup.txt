@@ -1,3 +1,5 @@
 # For package
 numpy
 scikit-learn
+ConfigSpace
+pandas

@@ -4,7 +4,9 @@ import json
 import os
 import pickle
 
-from model_selector.constants import SAVE_DIR_NAME
+import numpy as np
+
+from olympus_surrogate_bench.constants import SAVE_DIR_NAME
 
 import optuna
 
@@ -19,8 +21,8 @@ SEED = 42
 
 class Evaluator:
     def __init__(self, dataset_name: str, n_folds: int = 5, seed: int = SEED):
-        self._feats = pd.read_csv(os.path.join(SAVE_DIR_NAME, dataset_name, "feats.csv"))
-        self._targets = pd.read_csv(os.path.join(SAVE_DIR_NAME, dataset_name, "targets.csv"))
+        self._feats = pd.read_csv(os.path.join(SAVE_DIR_NAME, dataset_name, "feats.csv"), index_col=False)
+        self._targets = pd.read_csv(os.path.join(SAVE_DIR_NAME, dataset_name, "targets.csv"), index_col=False)
         kf = KFold(n_splits=n_folds, shuffle=True, random_state=seed)
         self._fold_indices = [
             (train_indices, val_indices) for train_indices, val_indices in kf.split(self._feats, self._targets)
@@ -32,7 +34,7 @@ class Evaluator:
     def full_train(self, best_trial: optuna.FrozenTrial) -> float:
         model_kwargs = dict(n_estimators=100, **self.format_best_trial(best_trial))
         model = RandomForestRegressor(**model_kwargs)
-        return model.fit(self._feats, self._targets)
+        return model.fit(self._feats, np.squeeze(self._targets))
 
     def __call__(self, trial: optuna.Trial) -> float:
         model_kwargs = dict(
@@ -45,9 +47,9 @@ class Evaluator:
         score = 0.0  # larger is better! (maximum is 1.0)
         for train_indices, val_indices in self._fold_indices:
             model = RandomForestRegressor(**model_kwargs)
-            feats_train, targets_train = self._feats.iloc[train_indices], self._targets.iloc[train_indices]
+            feats_train, targets_train = self._feats.iloc[train_indices], np.squeeze(self._targets.iloc[train_indices])
             model.fit(feats_train, targets_train)
-            feats_val, targets_val = self._feats.iloc[val_indices], self._targets.iloc[val_indices]
+            feats_val, targets_val = self._feats.iloc[val_indices], np.squeeze(self._targets.iloc[val_indices])
             score += model.score(feats_val, targets_val)
 
         return score
