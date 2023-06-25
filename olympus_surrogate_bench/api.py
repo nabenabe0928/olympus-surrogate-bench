@@ -44,8 +44,10 @@ class OlympusSurrogateAPI:
     @property
     def config_space(self) -> CS.ConfigurationSpace:
         config_space = CS.ConfigurationSpace()
-        config_space.add_hyperparameters([
-            CS.UniformFloatHyperparameter(name=name, lower=val_range[0], upper=val_range[1])
-            for name, val_range in self._search_space.items()
-        ])
+        config_space.add_hyperparameters(
+            [
+                CS.UniformFloatHyperparameter(name=name, lower=val_range[0], upper=val_range[1])
+                for name, val_range in self._search_space.items()
+            ]
+        )
         return config_space

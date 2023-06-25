@@ -1,4 +1,8 @@
 # For package
+numpy
+scikit-learn
+ConfigSpace
+pandas
 
 # For local check
 pytest-cov

@@ -1,6 +1,6 @@
+import os
 from dataclasses import dataclass
 from typing import Final, Iterator
-import os
 
 
 SAVE_DIR_NAME: Final[str] = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
