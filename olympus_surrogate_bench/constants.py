@@ -25,5 +25,8 @@ class DatasetNames:
     def __iter__(self) -> Iterator:
         return (name for name in self.__dict__.values())
 
+    def __len__(self) -> int:
+        return len(self.__dict__.values())
+
 
 DATASET_NAMES = DatasetNames()

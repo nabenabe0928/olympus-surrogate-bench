@@ -14,19 +14,19 @@ def test_dataset_names():
 
 
 def test_init():
-    for name in DATASET_NAMES:
-        OlympusSurrogateAPI(dataset_name=name)
+    for i in range(len(DATASET_NAMES)):
+        OlympusSurrogateAPI(dataset_id=i)
 
 
 def test_call():
-    for name in DATASET_NAMES:
-        api = OlympusSurrogateAPI(dataset_name=name)
+    for i in range(len(DATASET_NAMES)):
+        api = OlympusSurrogateAPI(dataset_id=i)
         assert isinstance(api(dict(api.config_space.sample_configuration())), float)
 
 
 def test_validate_config():
-    for name in DATASET_NAMES:
-        api = OlympusSurrogateAPI(dataset_name=name)
+    for i in range(len(DATASET_NAMES)):
+        api = OlympusSurrogateAPI(dataset_id=i)
         config = dict(api.config_space.sample_configuration())
         config["dummy"] = 1.0
         with pytest.raises(ValueError, match=r"Keys of eval_config must be identical*"):

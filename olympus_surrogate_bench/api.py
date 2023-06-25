@@ -6,7 +6,7 @@ import pickle
 
 import ConfigSpace as CS
 
-from olympus_surrogate_bench.constants import SAVE_DIR_NAME
+from olympus_surrogate_bench.constants import DATASET_NAMES, SAVE_DIR_NAME
 
 import pandas as pd
 
@@ -19,7 +19,8 @@ MINIMIZES: dict[str, bool] = json.load(open(os.path.join(DATA_DIR, "minimizes.js
 
 
 class OlympusSurrogateAPI:
-    def __init__(self, dataset_name: str):
+    def __init__(self, dataset_id: int):
+        dataset_name = DATASET_NAMES[dataset_id]
         self._minimize = MINIMIZES[dataset_name]
         self._search_space = SEARCH_SPACES[dataset_name]
         self._config_space = self.config_space
