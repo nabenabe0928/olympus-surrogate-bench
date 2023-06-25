@@ -23,6 +23,7 @@ class OlympusSurrogateAPI:
         self._minimize = MINIMIZES[dataset_name]
         self._search_space = SEARCH_SPACES[dataset_name]
         self._config_space = self.config_space
+        self._hp_names = set([name for name in self._config_space])
         with open(os.path.join(DATA_DIR, dataset_name, "model.pkl"), "rb") as f:
             self._surrogate: RandomForestRegressor = pickle.load(f)
 
@@ -32,6 +33,11 @@ class OlympusSurrogateAPI:
         return self._surrogate.predict(pd.DataFrame([config]))[0]
 
     def _validate_config(self, eval_config: dict[str, float]) -> None:
+        if any(name not in self._hp_names for name in eval_config):
+            raise ValueError(
+                f"Keys of eval_config must be identical to {list(self._hp_names)}, but got {eval_config=}."
+            )
+
         for name in self._config_space:
             hp = self._config_space.get_hyperparameter(name)
             if name not in eval_config:
