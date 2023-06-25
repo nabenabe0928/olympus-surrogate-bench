@@ -17,7 +17,7 @@ pkg_data = np.ravel(
 ).tolist()
 setuptools.setup(
     name="olympus-surrogate-bench",
-    version="0.0.1",
+    version="0.0.2",
     author="nabenabe0928",
     author_email="shuhei.watanabe.utokyo@gmail.com",
     url="https://github.com/nabenabe0928/olympus-surrogate-bench",

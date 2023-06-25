@@ -1,7 +1,7 @@
 from olympus_surrogate_bench.api import OlympusSurrogateAPI
 
 
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 __copyright__ = "Copyright (C) 2023 Shuhei Watanabe"
 __licence__ = "Apache-2.0 License"
 __author__ = "Shuhei Watanabe"

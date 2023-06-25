@@ -20,12 +20,12 @@ MINIMIZES: dict[str, bool] = json.load(open(os.path.join(DATA_DIR, "minimizes.js
 
 class OlympusSurrogateAPI:
     def __init__(self, dataset_id: int):
-        dataset_name = DATASET_NAMES[dataset_id]
-        self._minimize = MINIMIZES[dataset_name]
-        self._search_space = SEARCH_SPACES[dataset_name]
+        self._dataset_name = DATASET_NAMES[dataset_id]
+        self._minimize = MINIMIZES[self.dataset_name]
+        self._search_space = SEARCH_SPACES[self.dataset_name]
         self._config_space = self.config_space
         self._hp_names = set([name for name in self._config_space])
-        with open(os.path.join(DATA_DIR, dataset_name, "model.pkl"), "rb") as f:
+        with open(os.path.join(DATA_DIR, self.dataset_name, "model.pkl"), "rb") as f:
             self._surrogate: RandomForestRegressor = pickle.load(f)
 
     def __call__(self, eval_config: dict[str, float]) -> float:
@@ -58,3 +58,7 @@ class OlympusSurrogateAPI:
             ]
         )
         return config_space
+
+    @property
+    def dataset_name(self) -> str:
+        return self._dataset_name

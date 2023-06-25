@@ -27,6 +27,9 @@ from olympus_surrogate_bench import OlympusSurrogateAPI
 # dataset_id must be chosen from the table below, i.e. 0 -- 9
 api = OlympusSurrogateAPI(dataset_id=0)
 
+# Dataset name
+print(api.dataset_name)
+
 # Search space
 print(api.config_space)
 
