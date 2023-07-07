@@ -45,7 +45,8 @@ class OlympusSurrogateAPI:
                 raise KeyError(f"eval_config must have a key named {name}")
 
             val = eval_config[name]
-            if val < hp.lower or val > hp.upper:
+            EPS = 1e-12
+            if val + EPS < hp.lower or val - EPS > hp.upper:
                 raise ValueError(f"{name} must be in [{hp.lower}, {hp.upper}], but got {val}.")
 
     @property
